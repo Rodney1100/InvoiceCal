@@ -1,60 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estimate Generator</title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" /> -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Estimate Generator</title>
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" /> -->
-  <link rel="stylesheet" href="./assets/css/style.css" />
-</head>
-
-<body>
-  <header>
-    <h1>Estimate Generator</h1>
-  </header>
-  <section class="form">
-    <form class="form1">
-      <label>Invoice description:
+  <body id="body">
+    <header>
+      <h3>Leighton Transportation Services</h3>
+    </header>
+    <section class="form">
+      <form class="form1">
+        <!-- <label>Invoice description:
         <textarea type="text" id="description1"></textarea>
-      </label>
+      </label> -->
 
-      <label>Address:<input type="text" id="address" /></label>
-
-      <label for="distance1">Distance one way in miles:
-        <input type="number" name="dis" id="distance1" min="1" max="999990" /></label>
-      <p>Over Weight</p>
-      <input type="radio" name="Weight" value="yes" id="Weight" /> Yes
-      <input type="radio" name="Weight" value="no" id="Weight" /> No
-      <p>Chassis</p>
-      <input type="radio" name="chassis" value="20" id="chassis" /> 20 ft
-      <input type="radio" name="chassis" value="40" id="chassis" /> 40 ft
-      <input type="submit" value="submit" class="sub" />
-    </form>
-
-    <!-- <form class="form2">
-        <h3>for trips 300 miles or over</h3>
-        <label
-          >Invoice description:
-          <textarea type="text" id="description1"></textarea>
-        </label>
         <label>Address:<input type="text" id="address" /></label>
-        <label for="">Distance in miles</label>
-        <input type="number" name="" id="Distance1" min="300" max="999999" />
-        <p>Over Weight</p>
-        <input type="radio" name="Weight" value="yes" /> Yes
-        <input type="radio" name="Weight" value="no" /> No
-        <p>Chassis</p>
-        <input type="radio" name="chassis" value="yes" /> 20 ft
-        <input type="radio" name="chassis" value="no" /> 40 ft
-        <input type="submit" value="submit" />
-      </form> -->
-  </section>
-  <br />
-  <!-- output -->
-  <p id="quote">This quote is for:</p>
-</body>
-<script src="/assets//js/app.js"></script>
+        <br />
+        <label for="distance1"
+          >Distance one way in miles:
+          <input type="number" name="dis" id="distance1" min="1" max="999999"
+        /></label>
+        <br />
+        <label for="fuelCost"
+          >Fuel Cost:<input id="fuelCost" type="number" min="0" max="999"
+        /></label>
+        <br />
+        <!-- <label for="tolls">Tolls: <input type="number" id="tolls" /></label> -->
+        <label>Chassis:</label>
+        <select name="chassis" id="chassis">
+          <option disabled selected value></option>
+          <option value="20">20</option>
+          <option value="40">40</option>
+        </select>
 
+        <br />
+        <label>Over Weight:</label>
+        <select name="Weight" value="yes" id="Weight">
+          <option disabled selected value></option>
+          <option value="yes">yes</option>
+          <option value="No">no</option>
+        </select>
+        <br />
+        <input type="submit" value="submit" class="sub" />
+        <button>Reset</button>
+      </form>
+    </section>
+    <br />
+    <!-- output -->
+    <div id="quote">
+    </div>
+  </body>
+  <script src="/assets//js/app.js"></script>
 </html>

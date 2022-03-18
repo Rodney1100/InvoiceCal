@@ -1,61 +1,110 @@
-var formEl = document.getElementById("form1");
-var descriptionEl = document.getElementById("description1").value;
-var distance = document.getElementById("distance1");
-var submitEl = document.querySelector(".sub");
-var quote = document.getElementById("quote").value;
-document.querySelector('input[name="Weight"]:checked');
-// var weight = document.getElementById("Weight").value;
-// var chassis = document.getElementById("chassis").value;
+const resetState = (StateResseting) => {
+  while (StateResseting.firstChild) {
+    StateResseting.removeChild(StateResseting.firstChild);
+  }
+};
 
+var submitEl = document.querySelector(".sub");
 const getQuote = (event) => {
   event.preventDefault();
+  // var descriptionEl = document.getElementById("description1").value;
+  var formEl = document.getElementById("form1");
+  var fuelCost = document.getElementById("fuelCost").value;
+  var addressEl = document.getElementById("address").value;
+  var distance = document.getElementById("distance1").value;
+  var quote = document.getElementById("quote");
+  var weight = document.getElementById("Weight").value;
+  var chassis = document.getElementById("chassis").value;
+  let quoteList = document.createElement("ul");
+  // ==============================================================
+  var finalizedQuote = function (costBase, fuelCost, tollPrice, layOverCost) {
+    resetState(quote);
+    quoteList.classList.add("qList");
+    if (distance < 300) {
+      quoteList.innerHTML =
+        "<li><strong>Base Rate: </strong>$" +
+        costBase +
+        "</li><li><strong>Fuel: </strong> " +
+        fuelCost +
+        "%</li><li><strong>Tolls: </strong>$" +
+        tollPrice +
+        "</li><li><strong>Chassis: </strong>$" +
+        chassisPrice +
+        " Per Day (2 Day Minimum)</li>";
+    } else {
+      quoteList.innerHTML =
+        "<li><strong>Base Rate: </strong>$" +
+        costBase +
+        "</li><li><strong>Fuel: </strong> " +
+        fuelCost +
+        "%</li><li><strong>Tolls: </strong>$" +
+        tollPrice +
+        "</li><li><strong>Chassis: </strong>$" +
+        chassisPrice +
+        " Per Day (2 Day Minimum)</li> <li><strong>Layover: $</strong>" +
+        layOverCost +
+        "</li>";
+    }
+
+    quote.appendChild(quoteList);
+  };
+  // =================================================================
+  function round(x) {
+    return Math.ceil(x / 5) * 5;
+  }
+  let tollsFromSite = 10; // get toll from else where if i need to
   let tolls = 25;
-  let layOver= 350
-  let w = document.querySelector('input[name="Weight"]:checked').value;
-  let l = document.querySelector('input[name="chassis"]:checked').value;
-  if (distance.value < 300 && distance.value > 0) {
-    cost = Math.round(distance.value * 2 * 2.6);
-    console.log(cost);
-    if (w === "yes" || w === "no") {
-      cost +=150;
+  let layOverCost = 350;
+  let weightCost = 150;
+  let legal = 40;
+  let ChasOverWeight = 85;
+  if (distance < 300 && distance > 0) {
+    cost = Math.round(distance * 2 * 2.6);
+    var costBase = cost;
+    if (chassis === "20" && weight === "yes") {
+      cost += ChasOverWeight + weightCost;
+      chassisPrice = ChasOverWeight;
+    } else {
+      cost += 40 + weightCost;
+      chassisPrice = legal;
     }
-    if (l === "20" && w === "yes") {
-      console.log("yes + 20")
-      cost += 40 + 85;
-    }else{
-      console.log('')
-      cost+=40
-    }
-    if(w==='no'&& l==='40'){
-
-    }
-    console.log(cost);
     // tolls will go in here when i have access
-    cost += tolls;
-    console.log(cost);
-  } else if (distance.value >= 300) {
-    cost = Math.round(distance.value * 2 * 3.1);
-    console.log(cost);
-    if (w === "yes" || w === "no") {
-      cost +=150;
+    if (tolls >= tollsFromSite) {
+      tollPrice = tolls;
+      cost += tollPrice;
     }
-    if (l === "20" && w === "yes") {
-      console.log("yes + 20")
-      cost += 40 + 85;
-    }else{
-      console.log('')
-      cost+=40
+    if (fuelCost < 101 && fuelCost > 0) {
+      cost += (cost * fuelCost) / 100;
     }
-    if(w==='no'&& l==='40'){
-
-    }
+    cost = round(cost);
     console.log(cost);
+    finalizedQuote(costBase, fuelCost, tollPrice);
+    return;
+    // =================================================================
+  }
+  // =================================================================
+  else if (distance >= 300) {
+    cost = Math.round(distance * 2 * 3.1);
+    var costBase = cost;
+    if (chassis === "20" && weight === "yes") {
+      cost += ChasOverWeight + weightCost;
+      chassisPrice = ChasOverWeight;
+    } else {
+      cost += 40 + weightCost;
+      chassisPrice = legal;
+    }
     // tolls will go in here when i have access
-    cost += (tolls+ layOver);
+    if (tolls >= tollsFromSite) {
+      tollPrice = tolls;
+      cost += tollPrice;
+    }
+    if (fuelCost < 101 && fuelCost > 0) {
+      cost += (cost * fuelCost) / 100;
+    }
+    cost = round(cost);
     console.log(cost);
-
-
-    console.log("more than 300");
+    finalizedQuote(costBase, fuelCost, tollPrice, layOverCost);
+    return;
   } else {
     alert("please enter a number greater than 0");
   }
