@@ -41,7 +41,7 @@ const getQuote = (event) => {
         tollPrice +
         "</li><li><strong>Chassis: </strong>$" +
         chassisPrice +
-        " Per Day (2 Day Minimum)</li> <li><strong>Layover: $</strong>" +
+        " Per Day (3 Day Minimum)</li> <li><strong>Layover: $</strong>" +
         layOverCost +
         "</li>";
     }
